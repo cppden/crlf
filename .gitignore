@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# QtCreator
+*.user
+*.creator
+*.files
+*.includes
+*.config
+

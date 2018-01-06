@@ -32,20 +32,21 @@ The set is tested against different inputs: regular, worst and best, and multipl
 * The both axes have logarithmic scale.
 * Results are obtained for gcc7.2 with -O3 running on i7-3517U CPU at 3 GHz.
 
+
 1. Regular input
   * The best performing searchers are custom dedicated routines d2 and qd.
   * The worst performing searcher is std::string_view::find and std::string::find is next.
   * std::strstr outperforms even FJS.
   * As expected FJS outperforms both Boyer-Moore and Boyer-Moore-Horspool.
 
-* Best input
+2. Best input
   * The best performing searcher is std::string::find which is due to recent optimization in STL for this particular function (uses strchr to find 1st char of pattern).
   * The next to it is std::strstr.
   * The worst performing searchers are Boyer-Moore and Boyer-Moore-Horspool.
 
-* Worst input
+3. Worst input
   * The best is d2 with qd next.
   * The worst is std::string::find which is again due to the recent optimization.
 
-* Alignment of input data.
+4. Alignment of input data.
   * There were no noticeable impact on input alignment observed.

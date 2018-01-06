@@ -26,7 +26,7 @@ The set is tested against different inputs: regular, worst and best, and multipl
 * Custom algos currently do not care of reading beyond the input since were made only for comparison. Though adding proper handling of end of input shouldn't cause noticeable degradation.
 
 # Results and conclusions
-![chart](https://github.com/cppden/crlf/img/inputs.png)
+![chart](crlf/img/inputs.png)
 
 ### Notes
 * The both axes have logarithmic scale.

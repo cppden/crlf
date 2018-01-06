@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 #driver,input,algo,offset,chars,iterations,real_time,cpu_time
-data = np.genfromtxt('/home/dgp/github/crlf/search.csv', delimiter=',', skip_header=9, 
+data = np.genfromtxt('search.csv', delimiter=',', skip_header=9, 
                      usecols=(1,2,3,4,7), names=True, dtype="|S16,|S16,u1,u4,float")
 
 #select only zero offsets

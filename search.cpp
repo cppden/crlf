@@ -145,7 +145,7 @@ char const* dcrlf(std::string_view const& hay)
 	return nullptr;
 }
 
-//reading by words with skip
+//reading by words with skip (looks back when needed)
 char const* dcrlf2(std::string_view const& hay)
 {
 	uint16_t const* pw = reinterpret_cast<uint16_t const*>(hay.data() + (std::size_t(hay.data()) & 1));
@@ -174,7 +174,7 @@ char const* dcrlf2(std::string_view const& hay)
 	return nullptr;
 }
 
-//reading by words with skip and saving previous
+//reading by words with skip and saving previous to avoid look-back
 char const* dcrlf3(std::string_view const& hay)
 {
 	uint16_t const* pw = reinterpret_cast<uint16_t const*>(hay.data() + (std::size_t(hay.data()) & 1));
@@ -508,12 +508,12 @@ BENCHMARK_CAPTURE(BM_crlf,   regular/qd/ofs=2,     INPUT, 2, quad::dcrlf)->Range
 BENCHMARK_CAPTURE(BM_crlf,   regular/qd/ofs=3,     INPUT, 3, quad::dcrlf)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_strstr, regular/strstr/ofs=0, INPUT, 0)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_strstr, regular/strstr/ofs=1, INPUT, 1)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_fjs,    regular/fjs,          INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_fjs,    regular/fjs/ofs=0,    INPUT)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_sview,  regular/sview/ofs=0,  INPUT, 0)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_sview,  regular/sview/ofs=1,  INPUT, 1)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_string, regular/string,       INPUT)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_bm,     regular/boyer_moore,  INPUT)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_bmh,    regular/bm_horspool,  INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_string, regular/string/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_bm,     regular/boyer_moore/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_bmh,    regular/bm_horspool/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
 
 #undef INPUT
 #define INPUT input_worst
@@ -529,12 +529,12 @@ BENCHMARK_CAPTURE(BM_crlf,   worst/qd/ofs=2,     INPUT, 2, quad::dcrlf)->RangeMu
 BENCHMARK_CAPTURE(BM_crlf,   worst/qd/ofs=3,     INPUT, 3, quad::dcrlf)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_strstr, worst/strstr/ofs=0, INPUT, 0)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_strstr, worst/strstr/ofs=1, INPUT, 1)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_fjs,    worst/fjs,          INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_fjs,    worst/fjs/ofs=0,    INPUT)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_sview,  worst/sview/ofs=0,  INPUT, 0)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_sview,  worst/sview/ofs=1,  INPUT, 1)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_string, worst/string,       INPUT)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_bm,     worst/boyer_moore,  INPUT)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_bmh,    worst/bm_horspool,  INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_string, worst/string/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_bm,     worst/boyer_moore/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_bmh,    worst/bm_horspool/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
 
 #undef INPUT
 #define INPUT input_best
@@ -550,12 +550,12 @@ BENCHMARK_CAPTURE(BM_crlf,   best/qd/ofs=2,     INPUT, 2, quad::dcrlf)->RangeMul
 BENCHMARK_CAPTURE(BM_crlf,   best/qd/ofs=3,     INPUT, 3, quad::dcrlf)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_strstr, best/strstr/ofs=0, INPUT, 0)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_strstr, best/strstr/ofs=1, INPUT, 1)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_fjs,    best/fjs,          INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_fjs,    best/fjs/ofs=0,    INPUT)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_sview,  best/sview/ofs=0,  INPUT, 0)->RangeMultiplier(2)->Range(16, UPTO);
 BENCHMARK_CAPTURE(BM_sview,  best/sview/ofs=1,  INPUT, 1)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_string, best/string,       INPUT)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_bm,     best/boyer_moore,  INPUT)->RangeMultiplier(2)->Range(16, UPTO);
-BENCHMARK_CAPTURE(BM_bmh,    best/bm_horspool,  INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_string, best/string/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_bm,     best/boyer_moore/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
+BENCHMARK_CAPTURE(BM_bmh,    best/bm_horspool/ofs=0, INPUT)->RangeMultiplier(2)->Range(16, UPTO);
 
 
 BENCHMARK_MAIN();

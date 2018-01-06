@@ -10,15 +10,15 @@ The set is tested against different inputs: regular, worst and best, and multipl
 
 ### List of searchers
 1. std::strstr
-* std::string_view::find
-* std::string::find
-* Franek Jennings Smyth algorithm
-* Boyer Moore
-* Boyer Moore Horspool
-* d1-searcher: reads by words (two bytes at once)
-* d2-searcher: reads by words skipping next when possible, looks back when needed
-* d3-searcher: reads by words with skips and saving previous to avoid look-back
-* qd-searcher: reads by double words with skips and saving previous
+1. std::string_view::find
+1. std::string::find
+1. Franek Jennings Smyth algorithm
+1. Boyer Moore
+1. Boyer Moore Horspool
+1. d1-searcher: reads by words (two bytes at once)
+1. d2-searcher: reads by words skipping next when possible, looks back when needed
+1. d3-searcher: reads by words with skips and saving previous to avoid look-back
+1. qd-searcher: reads by double words with skips and saving previous
 
 ### Notes
 * FJS algorithm was chosen as the fastest for our case among studied in https://arxiv.org/pdf/1012.2547v1.pdf.

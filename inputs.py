@@ -2,13 +2,18 @@
 # -*- coding: utf-8 -*-
 """
 Python script to plot benchmarking results
+
+Steps to produce and process results:
+./bm_search --benchmark_out_format=csv --benchmark_out=search.csv
+sed -i 's/\//,/g' search.csv
+sed -i 's/ofs=//g' search.csv
 """
 
 import matplotlib.pyplot as plt
 import numpy as np
 
 #driver,input,algo,offset,chars,iterations,real_time,cpu_time
-data = np.genfromtxt('/home/dgp/github/crlf/search.csv', delimiter=',',
+data = np.genfromtxt('/home/dgp/github/crlf/search.csv', delimiter=',', skip_header=9, 
                      usecols=(1,2,3,4,7), names=True, dtype="|S16,|S16,u1,u4,float")
 
 #select only zero offsets
@@ -17,7 +22,6 @@ regular = data0[data0['input'] == b'regular']
 worst = data0[data0['input'] == b'worst']
 best = data0[data0['input'] == b'best']
 algos = list(set(data['algo']))
-#inputs = list(set(data['input']))
 
 def algo_plot(inp, plot, title):
     plot.set_title(title, loc='left')
@@ -29,8 +33,6 @@ def algo_plot(inp, plot, title):
         plot.grid(True)
         plot.set_xscale('log')
         plot.set_yscale('log')
-        #plot.legend()
-
 
 fig = plt.figure(1)
 algo_plot(regular, fig.add_subplot(311), 'Regular (offset=0)')
@@ -45,5 +47,4 @@ fig.subplots_adjust(top=0.95,
                     wspace=0.2)
 
 plt.show()
-
 
